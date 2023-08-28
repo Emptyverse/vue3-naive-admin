@@ -3,14 +3,14 @@ import { resolveToken } from '../utils'
 const users = {
   admin: {
     id: 1,
-    name: '大脸怪(admin)',
+    name: '光(admin)',
     avatar: 'https://assets.qszone.com/images/avatar.jpg',
     email: 'Ronnie@123.com',
     role: ['admin'],
   },
   editor: {
     id: 2,
-    name: '大脸怪(editor)',
+    name: '光光(editor)',
     avatar: 'https://assets.qszone.com/images/avatar.jpg',
     email: 'Ronnie@123.com',
     role: ['editor'],

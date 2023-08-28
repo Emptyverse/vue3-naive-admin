@@ -6,7 +6,7 @@ export default {
   component: Layout,
   redirect: '/base/index',
   meta: {
-    title: '基础功能',
+    title: 'APP版本管理',
     icon: 'majesticons:compass-line',
     order: 1,
   },

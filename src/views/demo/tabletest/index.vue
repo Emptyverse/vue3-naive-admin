@@ -22,7 +22,6 @@
       :get-data="api.getPosts"
       @on-checked="onChecked"
       @on-data-change="(data) => (tableData = data)"
-      @update:filters="handleUpdateFilter"
     >
       <template #queryBar>
         <QueryBarItem label="标题" :label-width="50">
@@ -30,7 +29,7 @@
             v-model:value="queryItems.title"
             type="text"
             placeholder="请输入标题"
-            @keypress.enter="$table?.handleSearch"
+            @keypress.enter="table$?.handleSearch"
           />
         </QueryBarItem>
       </template>
@@ -90,8 +89,7 @@
 </template>
 
 <script setup>
-import { NButton, NSwitch, NIcon } from 'naive-ui'
-import { SearchOutline } from '@vicons/ionicons5'
+import { NButton, NSwitch } from 'naive-ui'
 import { formatDateTime, renderIcon, isNullOrUndef } from '@/utils'
 import { useCRUD } from '@/composables'
 import api from './api'
@@ -105,36 +103,6 @@ const tableData = ref([])
 const queryItems = ref({})
 /** 补充参数（可选） */
 const extraParams = ref({})
-/** 过滤列 */
-const addressColumn = reactive({
-  title: '创建人',
-  key: 'author',
-  width: 80,
-  filterMultiple: true,
-  filterOptionValue: null,
-  filterOptions: [
-    {
-      label: '大',
-      value: '大',
-    },
-    {
-      label: 'Ronnie',
-      value: 'Ronnie',
-    },
-    {
-      label: 'Vue',
-      value: 'Vue',
-    },
-  ],
-  // renderFilterIcon: () => {
-  //   return h(NIcon, null, { default: () => h(SearchOutline) })
-  // },
-  sorter: 'default',
-  filter(value, row) {
-    console.log('过滤', row.author)
-    return !!~row.author.indexOf(value.toString())
-  },
-})
 
 onActivated(() => {
   $table.value?.handleSearch()
@@ -160,8 +128,7 @@ const columns = [
   },
   { title: '标题', key: 'title', width: 150, ellipsis: { tooltip: true } },
   { title: '分类', key: 'category', width: 80, ellipsis: { tooltip: true } },
-  // { title: '创建人', key: 'author', width: 80 },
-  addressColumn,
+  { title: '创建人', key: 'author', width: 80 },
   {
     title: '创建时间',
     key: 'createDate',
@@ -241,12 +208,6 @@ function handlePublish(row) {
     row.publishing = false
     $message?.success(row.isPublish ? '已发布' : '已取消发布')
   }, 1000)
-}
-
-// 过滤
-function handleUpdateFilter(filters, sourceColumn) {
-  console.log('过滤成功', filters[sourceColumn.key])
-  addressColumn.filterOptionValue = filters[sourceColumn.key]
 }
 
 const {

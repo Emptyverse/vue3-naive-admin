@@ -1,58 +1,92 @@
 <template>
-  <AppPage :show-footer="true">
-    <div flex-1>
-      <n-card rounded-10>
-        <div flex items-center>
-          <img rounded-full width="60" :src="userStore.avatar" />
-          <div ml-20>
-            <p text-16>Hello, {{ userStore.name }}</p>
-            <p mt-5 text-12 op-60>今天又是元气满满的一天</p>
-          </div>
-          <div ml-auto flex items-center>
-            <n-statistic label="待办" :value="4">
-              <template #suffix>/ 10</template>
-            </n-statistic>
-            <n-statistic label="Stars" ml-80 w-100>
-              <a href="https://github.com/zclzone/vue-naive-admin">
-                <img alt="stars" src="https://badgen.net/github/stars/zclzone/vue-naive-admin" />
-              </a>
-            </n-statistic>
-            <n-statistic label="Forks" ml-80 w-100>
-              <a href="https://github.com/zclzone/vue-naive-admin">
-                <img alt="forks" src="https://badgen.net/github/forks/zclzone/vue-naive-admin" />
-              </a>
-            </n-statistic>
-          </div>
-        </div>
-      </n-card>
-
-      <n-card title="项目" size="small" :segmented="true" mt-15 rounded-10>
-        <template #header-extra>
-          <n-button text type="primary">更多</n-button>
-        </template>
-        <div flex flex-wrap justify-between>
-          <n-card
-            v-for="i in 10"
-            :key="i"
-            class="mb-10 mt-10 w-300 flex-shrink-0 cursor-pointer"
-            hover:card-shadow
-            title="Vue Naive Admin"
-            size="small"
-          >
-            <p op-60>一个基于 Vue3.0、Vite、Naive UI 的轻量级后台管理模板</p>
-          </n-card>
-          <div h-0 w-300></div>
-          <div h-0 w-300></div>
-          <div h-0 w-300></div>
-          <div h-0 w-300></div>
-        </div>
-      </n-card>
-    </div>
-  </AppPage>
+  <div class="chart-container">
+    <MyEchart :options="option1" class="chart"></MyEchart>
+    <MyEchart :options="option2" class="chart"></MyEchart>
+  </div>
 </template>
 
 <script setup>
-import { useUserStore } from '@/store'
+import { reactive } from 'vue'
+import MyEchart from '@/components/echarts/MyEchart.vue'
+// TODO: 此处引入api
 
-const userStore = useUserStore()
+// const data = ref([])
+// 首先需要引入api
+// onMounted(async () => {
+//   try {
+//     const response = await axios.get('your_api_endpoint')
+//     // 这里假设 API 返回的数据是一个数组
+//     if (response.data && Array.isArray(response.data)) {
+//       data.value = response.data
+//     }
+//   } catch (error) {
+//     console.error('Error fetching data:', error)
+//   }
+// })
+const option1 = reactive({
+  title: {
+    text: '内容更新统计',
+    subtext: 'Content update statistics',
+    left: 'left',
+  },
+  yAxis: {
+    // 将原先的 xAxis 改为 yAxis
+    data: ['A', 'B', 'C', 'D', 'E'],
+  },
+  xAxis: {}, // 将原先的 yAxis 改为 xAxis
+  series: [
+    {
+      type: 'bar',
+      data: [10, 22, 28, 43, 49],
+      barWidth: '40%',
+    },
+  ],
+})
+
+const option2 = reactive({
+  title: {
+    text: '内容更新统计',
+    subtext: 'Content update statistics',
+    left: 'right',
+  },
+  tooltip: {
+    trigger: 'item',
+  },
+
+  series: [
+    {
+      name: 'Access From',
+      type: 'pie',
+      radius: '70%',
+      // 直接在data中调用 data.value
+      data: [
+        { value: 1048, name: 'Search Engine' },
+        { value: 735, name: 'Direct' },
+        { value: 580, name: 'Email' },
+        { value: 484, name: 'Union Ads' },
+        { value: 300, name: 'Video Ads' },
+      ],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)',
+        },
+      },
+    },
+  ],
+})
 </script>
+
+<style scoped>
+.chart-container {
+  display: flex;
+  padding: 10px;
+}
+
+.chart {
+  flex: 1;
+  height: 300px;
+  margin-right: 10px;
+}
+</style>

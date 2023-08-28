@@ -26,6 +26,30 @@ export default {
       },
     },
     {
+      name: 'Crud1',
+      path: 'crud1',
+      component: () => import('./tabletest/index.vue'),
+      meta: {
+        title: 'CRUD表格',
+        icon: 'ic:baseline-table-view',
+        role: ['admin'],
+        requireAuth: true,
+        keepAlive: true,
+      },
+    },
+    {
+      name: 'Crud2',
+      path: 'crud2',
+      component: () => import('./testdemo/index.vue'),
+      meta: {
+        title: 'CRUD表格',
+        icon: 'ic:baseline-table-view',
+        role: ['admin'],
+        requireAuth: true,
+        keepAlive: true,
+      },
+    },
+    {
       name: 'MDEditor',
       path: 'md-editor',
       component: () => import('./editor/md-editor.vue'),

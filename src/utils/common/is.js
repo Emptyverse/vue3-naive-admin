@@ -100,6 +100,11 @@ export function ifNull(val, def = '') {
   return isNullOrWhitespace(val) ? def : val
 }
 
+/**
+ * * 判断路径是否为外部链接
+ * @param {*} path
+ * @returns
+ */
 export function isUrl(path) {
   const reg =
     /(((^https?:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)$/
